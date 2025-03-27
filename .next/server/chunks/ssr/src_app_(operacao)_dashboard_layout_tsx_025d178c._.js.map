@@ -1,0 +1,6 @@
+{
+  "version": 3,
+  "sources": [],
+  "sections": [
+    {"offset": {"line": 7, "column": 0}, "map": {"version":3,"sources":["file:///workspaces/app-dashboard/src/app/%28operacao%29/dashboard/layout.tsx"],"sourcesContent":["import { Metadata } from \"next\";\nimport React from \"react\";\n\n\n\nexport const metadata: Metadata = {\n    title: \"Dashboard\"\n};\n\n\nexport default function Layout({ children } : Readonly<{ children: React.ReactNode }>) {\n    return (\n        <React.Fragment>\n            {children}\n        </React.Fragment>\n    )\n}"],"names":[],"mappings":";;;;;AACA;;;AAIO,MAAM,WAAqB;IAC9B,OAAO;AACX;AAGe,SAAS,OAAO,EAAE,QAAQ,EAA4C;IACjF,qBACI,8OAAC,qMAAA,CAAA,UAAK,CAAC,QAAQ;kBACV;;;;;;AAGb","debugId":null}}]
+}

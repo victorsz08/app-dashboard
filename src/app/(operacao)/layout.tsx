@@ -35,7 +35,7 @@ export default function Layout({
   children: React.ReactNode;
 }>) {
   return (
-    <SidebarProvider defaultOpen>
+    <SidebarProvider defaultOpen={false}>
         <AppSidebar variant="sidebar"/>
         <main className="min-h-screen w-full">
             <SidebarHeader 
