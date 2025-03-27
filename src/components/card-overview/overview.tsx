@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { DatePickerWithRange } from "../date-range/date-range";
 import { DateRange } from "../date-range/date-range";
-import { startOfMonth } from "date-fns";
+import { startOfMonth, subDays } from "date-fns";
 import { CardReport } from "./card-report";
 import { ChartNoAxesColumnIncreasing, Handshake, Landmark } from "lucide-react";
 import { DailyBarChart } from "../charts-data/bar-chart";
@@ -16,7 +16,7 @@ import { DataTableToday } from "../data-table/table-orders-today";
 export function Overview() {
     const [dateRange, setDateRange] = useState<DateRange>( {
         to: new Date(),
-        from: startOfMonth(new Date())
+        from: subDays(new Date(), 7)
     });
 
 

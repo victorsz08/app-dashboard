@@ -5,7 +5,6 @@ import { DropdownMenu, DropdownMenuGroup, DropdownMenuItem, DropdownMenuLabel, D
 import { DropdownMenuContent } from "@radix-ui/react-dropdown-menu";
 import { Separator } from "../ui/separator";
 import { Button } from "../ui/button";
-import { set } from "date-fns";
 import { useState } from "react";
 
 
@@ -21,7 +20,7 @@ export function UserNotifications({ notifications }: { notifications: Notificati
     return (
         <DropdownMenu open={isOpen} onOpenChange={setIsOpen}>
             <DropdownMenuTrigger className="relative cursor-pointer">
-                <Inbox className="w-8 h-8 text-slate-600"/>
+                <Inbox size={24} className="text-slate-600"/>
                 {notifications.length > 0 && 
                     <span className="w-4 h-4 bg-red-500 rounded-full absolute -top-1 -right-1 flex items-center 
                         justify-center text-white text-xs">
