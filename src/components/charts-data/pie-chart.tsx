@@ -31,11 +31,11 @@ const chartConfig = {
   },
   pendentes: {
     label: "Pendentes",
-    color: "var(--chart-2)",
+    color: "var(--chart-3)",
   },
   canceladas: {
     label: "Canceladas",
-    color: "var(--chart-3)",
+    color: "var(--chart-2)",
   },
 } satisfies ChartConfig
 
@@ -92,38 +92,56 @@ export function PieChartByDate({ dateRange }: PieChartByDateProps) {
     return chartData.reduce((acc, curr) => acc + curr.quantidade, 0)
   }, [chartData])
 
-  // Format date for display
   const formatDateRange = () => {
     if (!dateRange.from || !dateRange.to) return "Selecione um período"
 
     const formatDate = (date: Date) => {
       return new Intl.DateTimeFormat("pt-BR", {
         day: "2-digit",
-        month: "2-digit",
+        month: "short",
         year: "numeric",
       }).format(date)
     }
 
     return `${formatDate(dateRange.from)} - ${formatDate(dateRange.to)}`
-  }
+  };
+
+  const CustomTooltip = ({ active, payload }: any) => {
+    if (active && payload && payload.length) {
+      const data: StatusData = payload[0].payload;
+      const percentage = total ? ((data.quantidade / total) * 100).toFixed(1) : "0.0";
+      console.log(data)
+      return (
+        <div className="bg-white text-slate-500 p-2 border rounded shadow w-[180px]">
+          <span className="flex items-center gap-1 mb-1">
+            <span style={{ backgroundColor: data.fill}} className="w-3 h-3"></span>
+            <p className="text-[12px] font-medium">{data.status}</p>
+          </span>
+          <p className="text-[10px]">Quantidade: {data.quantidade}</p>
+          <p className="text-[10px]">Porcentagem: {percentage}%</p>
+        </div>
+      );
+    }
+    return null;
+  };
 
   return (
     <Card className="flex flex-col">
       <CardHeader className="items-center pb-0">
-        <CardTitle>Status de Instalações</CardTitle>
-        <CardDescription>{formatDateRange()}</CardDescription>
+        <CardTitle className="text-slate-600">Status de Instalações</CardTitle>
+        <CardDescription className="text-xs">{formatDateRange()}</CardDescription>
       </CardHeader>
       <CardContent className="flex-1 pb-0">
         <ChartContainer config={chartConfig} className="mx-auto aspect-square h-[200px]">
           <PieChart>
-            <ChartTooltip cursor={false} content={<ChartTooltipContent hideLabel />} />
-            <Pie data={chartData} dataKey="quantidade" nameKey="status" innerRadius={60} strokeWidth={3}>
+            <ChartTooltip cursor={false} content={<CustomTooltip/>} />
+            <Pie data={chartData} dataKey="quantidade" nameKey="status" innerRadius={50} strokeWidth={4}>
               <Label
                 content={({ viewBox }) => {
                   if (viewBox && "cx" in viewBox && "cy" in viewBox) {
                     return (
                       <text x={viewBox.cx} y={viewBox.cy} textAnchor="middle" dominantBaseline="middle">
-                        <tspan x={viewBox.cx} y={viewBox.cy} className="fill-foreground text-3xl font-bold">
+                        <tspan x={viewBox.cx} y={viewBox.cy} className="fill-slate-600 text-2xl font-bold">
                           {total.toLocaleString("pt-BR")}
                         </tspan>
                         <tspan x={viewBox.cx} y={(viewBox.cy || 0) + 24} className="fill-muted-foreground">
@@ -139,7 +157,21 @@ export function PieChartByDate({ dateRange }: PieChartByDateProps) {
         </ChartContainer>
       </CardContent>
       <CardFooter className="flex-col gap-2 text-sm">
-        <div className="leading-none text-muted-foreground">
+        <div className="flex flex-row items-center justify-center flex-wrap gap-2">
+            <div className="flex items-center gap-1">
+              <span style={{ backgroundColor: chartConfig.instaladas.color }} className="w-2 h-2"></span>
+              <p className="text-[10px] text-slate-500">{chartConfig.instaladas.label}</p>
+            </div>
+            <div className="flex items-center gap-1">
+              <span style={{ backgroundColor: chartConfig.pendentes.color }} className="w-2 h-2"></span>
+              <p className="text-[10px] text-slate-500">{chartConfig.pendentes.label}</p>
+            </div>
+            <div className="flex items-center gap-1">
+              <span style={{ backgroundColor: chartConfig.canceladas.color }} className="w-2 h-2"></span>
+              <p className="text-[10px] text-slate-500">{chartConfig.canceladas.label}</p>
+            </div>
+        </div>
+        <div className="leading-none text-xs text-center text-muted-foreground">
           Mostrando status de instalações para o período selecionado
         </div>
       </CardFooter>

@@ -10,7 +10,7 @@
     "static/chunks/node_modules_react-day-picker_dist_index_esm_9fc30424.js",
     "static/chunks/node_modules_lodash_e693ce99._.js",
     "static/chunks/node_modules_recharts_es6_36d4eefd._.js",
-    "static/chunks/node_modules_1f1f60e2._.js"
+    "static/chunks/node_modules_cfca69c4._.js"
   ],
   "source": "dynamic"
 });

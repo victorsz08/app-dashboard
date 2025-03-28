@@ -1,6 +1,5 @@
 "use client"
 
-import { TrendingUp } from "lucide-react"
 import { useState, useEffect } from "react"
 import { Bar, BarChart, CartesianGrid, XAxis } from "recharts"
 
@@ -77,7 +76,7 @@ export function DailyBarChart({ dateRange }: DailyBarChartProps) {
     const formatDate = (date: Date) => {
       return new Intl.DateTimeFormat("pt-BR", {
         day: "2-digit",
-        month: "2-digit",
+        month: "short",
         year: "numeric",
       }).format(date)
     }
@@ -88,11 +87,11 @@ export function DailyBarChart({ dateRange }: DailyBarChartProps) {
   return (
     <Card className="w-full">
       <CardHeader>
-        <CardTitle>Instalações e Cancelamentos</CardTitle>
-        <CardDescription>{formatDateRange()}</CardDescription>
+        <CardTitle className="text-slate-600">Instalações e Cancelamentos</CardTitle>
+        <CardDescription className="text-xs">{formatDateRange()}</CardDescription>
       </CardHeader>
       <CardContent>
-        <ChartContainer config={chartConfig} className="w-full h-[220px]">
+        <ChartContainer config={chartConfig} className="w-full h-[200px]">
           <BarChart accessibilityLayer data={chartData}>
             <CartesianGrid vertical={false} />
             <XAxis dataKey="day" tickLine={false} tickMargin={10} axisLine={false} />
@@ -103,7 +102,17 @@ export function DailyBarChart({ dateRange }: DailyBarChartProps) {
         </ChartContainer>
       </CardContent>
       <CardFooter className="flex-col items-start gap-2 text-sm">
-        <div className="leading-none text-muted-foreground">
+        <div className="flex items-center justify-start gap-4">
+          <span className="flex items-center gap-1">
+            <span className="w-3 h-3 inline-block rounded-xs" style={{ backgroundColor: chartConfig.instalados.color }}/>
+            <p className="text-xs text-slate-500">{chartConfig.instalados.label}</p>
+          </span>
+          <span className="flex items-center gap-1">
+            <span className="w-3 h-3 inline-block rounded-xs" style={{ backgroundColor: chartConfig.cancelados.color }}/>
+            <p className="text-xs text-slate-500">{chartConfig.cancelados.label}</p>
+          </span>
+        </div>
+        <div className="leading-none text-xs text-center text-muted-foreground">
           Mostrando instalações e cancelamentos para o período selecionado
         </div>
       </CardFooter>

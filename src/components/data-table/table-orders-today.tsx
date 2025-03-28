@@ -19,7 +19,7 @@ import {
   TableHeader,
   TableRow,
 } from "../ui/table";
-import { StatusBadge } from "../status-badge/status-badge";
+import { StatusBadge, StatusBadgeVariant } from "../status-badge/status-badge";
 import { Dropdown } from "react-day-picker";
 import {
   DropdownMenu,
@@ -79,18 +79,17 @@ export function DataTableToday() {
       </CardHeader>
       <CardContent>
         <section className="flex justify-end mb-2">
-          <Button className="cursor-pointer">+ Adicionar Contrato</Button>
+          <Button className="cursor-pointer text-xs font-normal">+ Adicionar Contrato</Button>
         </section>
-        <Separator />
-        <Table className="text-xs rounded">
-          <TableHeader>
+        <Table className="text-xs rounded-2xl mt-1 overflow-clip">
+          <TableHeader className="bg-slate-100 border-none">
             <TableRow>
               <TableHead>Contrato</TableHead>
               <TableHead>Cidade</TableHead>
               <TableHead>Data</TableHead>
               <TableHead>Horário</TableHead>
-              <TableHead>Status</TableHead>
-              <TableHead className="text-end">
+              <TableHead className="text-center w-[180px]">Status</TableHead>
+              <TableHead className="text-center border-none w-[150px]">
                 Ações
               </TableHead>
             </TableRow>
@@ -104,26 +103,17 @@ export function DataTableToday() {
                   {format(new Date(order.scheduleDate), "dd/MM/yyyy")}
                 </TableCell>
                 <TableCell>{order.scheduleTime}</TableCell>
-                <TableCell>
+                <TableCell className="w-[180px]" align="center">
                   <StatusBadge
-                    variant={
-                      order.status === "pendente"
-                        ? "pendente"
-                        : order.status === "conectado"
-                        ? "conectado"
-                        : "cancelado"
-                    }
-                  >
-                    {order.status}
-                  </StatusBadge>
+                    variant={order.status as StatusBadgeVariant}/>
                 </TableCell>
-                <TableCell className="w-fit" align="right">
+                <TableCell className="w-[150px]" align="center">
                   <DropdownMenu>
                     <DropdownMenuTrigger
                       asChild
                       className="cursor-pointer text-xs"
                     >
-                      <Button variant="secondary" className="h-5">
+                      <Button variant="default" className="h-5">
                         Editar
                       </Button>
                     </DropdownMenuTrigger>
