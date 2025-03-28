@@ -27,6 +27,7 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "../ui/dropdown-menu";
+import CreateContractDialog from "../dialogs/create-order-dialog";
 
 const orders = [
   {
@@ -78,9 +79,7 @@ export function DataTableToday() {
         </CardDescription>
       </CardHeader>
       <CardContent>
-        <section className="flex justify-end mb-2">
-          <Button className="cursor-pointer text-xs font-normal">+ Adicionar Contrato</Button>
-        </section>
+        <CreateContractDialog/>
         <Table className="text-xs rounded-2xl mt-1 overflow-clip">
           <TableHeader className="bg-slate-100 border-none">
             <TableRow>
