@@ -27,7 +27,7 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "../ui/dropdown-menu";
-import CreateContractDialog from "../dialogs/create-order-dialog";
+import { CreateOrderDialog } from "../dialogs/create-order-dialog";
 
 const orders = [
   {
@@ -72,14 +72,16 @@ export function DataTableToday() {
   return (
     <Card className="w-full">
       <CardHeader>
-        <CardTitle>Pedidos Recentes</CardTitle>
-        <CardDescription>
+        <CardTitle className="text-slate-600">Pedidos Recentes</CardTitle>
+        <CardDescription className="text-xs text-slate-500">
           Contratos com agendamentos previsto para hoje, dia{" "}
           {format(currentDate, "dd/MMMM", { locale: ptBR })}
         </CardDescription>
       </CardHeader>
       <CardContent>
-        <CreateContractDialog/>
+        <section className="flex justify-end mb-3">
+          <CreateOrderDialog/>
+        </section>
         <Table className="text-xs rounded-2xl mt-1 overflow-clip">
           <TableHeader className="bg-slate-100 border-none">
             <TableRow>
@@ -93,7 +95,7 @@ export function DataTableToday() {
               </TableHead>
             </TableRow>
           </TableHeader>
-          <TableBody>
+          <TableBody className="text-slate-500">
             {orders.map((order) => (
               <TableRow key={order.number}>
                 <TableCell>{order.number}</TableCell>
@@ -112,7 +114,7 @@ export function DataTableToday() {
                       asChild
                       className="cursor-pointer text-xs"
                     >
-                      <Button variant="default" className="h-5">
+                      <Button variant="default" className="h-8 bg-slate-950 text-white hover:bg-slate-800">
                         Editar
                       </Button>
                     </DropdownMenuTrigger>
