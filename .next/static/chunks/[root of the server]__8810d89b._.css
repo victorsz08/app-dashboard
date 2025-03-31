@@ -1003,10 +1003,6 @@
     width: calc(var(--spacing) * 9);
   }
 
-  .w-24 {
-    width: calc(var(--spacing) * 24);
-  }
-
   .w-28 {
     width: calc(var(--spacing) * 28);
   }
@@ -1037,6 +1033,10 @@
 
   .w-\[220px\] {
     width: 220px;
+  }
+
+  .w-\[230px\] {
+    width: 230px;
   }
 
   .w-\[300px\] {
@@ -1105,6 +1105,10 @@
 
   .min-w-\[12rem\] {
     min-width: 12rem;
+  }
+
+  .min-w-\[230px\] {
+    min-width: 230px;
   }
 
   .min-w-\[var\(--radix-select-trigger-width\)\] {
@@ -1355,18 +1359,8 @@
     gap: calc(var(--spacing) * 4);
   }
 
-  .gap-5 {
-    gap: calc(var(--spacing) * 5);
-  }
-
   .gap-6 {
     gap: calc(var(--spacing) * 6);
-  }
-
-  :where(.space-y-0 > :not(:last-child)) {
-    --tw-space-y-reverse: 0;
-    margin-block-start: calc(calc(var(--spacing) * 0) * var(--tw-space-y-reverse));
-    margin-block-end: calc(calc(var(--spacing) * 0) * calc(1 - var(--tw-space-y-reverse)));
   }
 
   :where(.space-y-4 > :not(:last-child)) {
@@ -2951,6 +2945,10 @@
 
   .aria-selected\:text-primary-foreground[aria-selected="true"] {
     color: var(--primary-foreground);
+  }
+
+  .aria-selected\:text-white[aria-selected="true"] {
+    color: var(--color-white);
   }
 
   .aria-selected\:opacity-100[aria-selected="true"] {

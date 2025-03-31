@@ -12,8 +12,6 @@ import {
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { Input } from "../ui/input";
-import { Combobox } from "../inputs/command";
-import { DatePicker } from "../inputs/date-picker";
 import {
   Select,
   SelectContent,
@@ -24,7 +22,14 @@ import {
 import { Textarea } from "../ui/textarea";
 import { Button } from "../ui/button";
 import { DialogClose } from "../ui/dialog";
-import { Separator } from "../ui/separator";
+import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem, CommandList } from "../ui/command";
+import { Popover, PopoverContent, PopoverTrigger } from "../ui/popover";
+import { cn } from "@/lib/utils";
+import { CalendarIcon, Check, ChevronsUpDown } from "lucide-react";
+import { useState } from "react";
+import { Calendar } from "../ui/calendar";
+import { ptBR } from "date-fns/locale";
+import { format } from "date-fns";
 
 const timeOptions = [
   {
@@ -41,12 +46,33 @@ const timeOptions = [
   },
 ];
 
+const localOptions = [
+  {
+    value: "São Paulo",
+  },
+  {
+    value: "Rio de Janeiro",
+  },
+  {
+    value: "Belo Horizonte",
+  },
+  {
+    value: "Brasília",
+  },
+  {
+    value: "Salvador",
+  },
+  {
+    value: "Fortaleza",
+  }
+]
+
 const createOrderFormSchema = z.object({
   number: z.coerce.number().min(1, { message: "Campo obrigatório" }),
   local: z.string().min(1, { message: "Campo obrigatório" }),
   schedulingDate: z.coerce.date().min(new Date(), { message: "Data inválida" }),
   schedulingTime: z.string().min(1, { message: "Campo obrigatório" }),
-  price: z.coerce.number().min(1, { message: "Campo obrigatório" }),
+  price: z.string().min(1, { message: "Campo obrigatório" }),
   contact: z.string().min(1, { message: "Campo obrigatório" }),
   observation: z.string().optional(),
 });
@@ -54,40 +80,39 @@ const createOrderFormSchema = z.object({
 type CreateOrderFormData = z.infer<typeof createOrderFormSchema>;
 
 export function CreateOrderForm() {
+  const [openCommand, setOpenCommand] = useState<boolean>(false);
+  const [calendarOpen, setCalendarOpen] = useState<boolean>(false);
+
   const form = useForm<CreateOrderFormData>({
     resolver: zodResolver(createOrderFormSchema),
     defaultValues: {
       number: 0,
-      price: 0,
+      price: "",
       schedulingDate: new Date(),
       local: "",
-      contact: ""
+      contact: "",
+      schedulingTime: "",
+      observation: ""
     },
   });
 
   function onSubmit(data: CreateOrderFormData) {
-    console.log(data);
+    console.log({
+      price: parseFloat(data.price.replace(",", ".").replace("R$", "")),
+    });
   }
 
   // função para transformar o valor em reais
-  function transformPrice(value: number) {
-    const priceFormatted = (value / 100).toFixed(2);
-    return priceFormatted.replace(".", ",");
-  }
+  function transformPrice(value: string) {
+    const valueNumber = value.replace(/[^0-9]/g,"")
+    const price = (Number(valueNumber) / 100).toLocaleString("pt-BR", {
+      style: "currency",
+      currency: "BRL",
+      minimumFractionDigits: 2,
+    })
 
-  // função para aceitar somente números
-  function transformNumber(value: number) {
-    const valueString = value.toString();
-    const numberValue = valueString.replace(/[^0-9]/g, "");
-    return Number(numberValue);
+    return price;
   }
-
-  const price = form.watch("price")
-    ? transformPrice(transformNumber(form.watch("price")))
-    : "";
-  const number = form.watch("number")
-    ? transformNumber(form.watch("number"))
-    : "";
 
   return (
     <Form {...form}>
@@ -107,7 +132,6 @@ export function CreateOrderForm() {
                 <FormControl>
                   <Input
                     {...field}
-                    value={number}
                     style={{ fontSize: "12px" }}
                     className="text-xs text-slate-600 placeholder:text-slate-500 placeholder:text-xs"
                   />
@@ -128,12 +152,62 @@ export function CreateOrderForm() {
                   Local
                 </FormLabel>
                 <FormControl>
-                  <Combobox
-                    options={[{ value: "São Paulo" }]}
-                    value={field.value}
-                    onAbort={field.onChange}
-                    placeholder="Selecione uma cidade"
-                  />
+                  <Popover open={openCommand} onOpenChange={setOpenCommand}>
+                    <PopoverTrigger asChild className="w-full">
+                      <Button
+                        variant="outline"
+                        role="combobox"
+                        aria-expanded={openCommand}
+                        className="min-w-[230px] justify-between font-normal text-xs text-slate-600"
+                      >
+                        {field.value ? (
+                          localOptions.find((option) => option.value === field.value)
+                            ?.value
+                        ) : (
+                          <span className="text-slate-400">Selecione a cidade</span>
+                        )}
+                        <ChevronsUpDown className="opacity-50" />
+                      </Button>
+                    </PopoverTrigger>
+                    <PopoverContent className="w-[230px] p-0">
+                      <Command>
+                        <CommandInput
+                          placeholder="Selecione a cidade"
+                          className="h-9 placeholder:text-xs w-full placeholder:text-slate-400"
+                        />
+                        <CommandList>
+                          <CommandEmpty className="text-xs italic text-slate-500">
+                            Nenhuma opção disponivel
+                          </CommandEmpty>
+                          <CommandGroup>
+                            {localOptions.map((option) => (
+                              <CommandItem
+                                key={option.value}
+                                value={option.value}
+                                className="text-xs text-slate-600 text-normal"
+                                onSelect={(currentValue) => {
+                                  field.onChange(
+                                    currentValue === field.value ? "" : currentValue
+                                  );
+                                  setOpenCommand(false);
+                                }}
+                              >
+                                {option.value}
+                                <Check
+                                  className={cn(
+                                    "ml-auto",
+                                    field.value === option.value
+                                      ? "opacity-100"
+                                      : "opacity-0"
+                                  )}
+                                />
+                              </CommandItem>
+                            ))}
+                          </CommandGroup>
+                        </CommandList>
+                      </Command>
+                    </PopoverContent>
+                  </Popover>
                 </FormControl>
                 <FormMessage className="text-[10px]" />
               </FormItem>
@@ -151,10 +225,32 @@ export function CreateOrderForm() {
                   Data de Agendamento
                 </FormLabel>
                 <FormControl>
-                  <DatePicker
-                    selected={field.value}
-                    onSelect={field.onChange}
-                  />
+                <Popover modal open={calendarOpen} onOpenChange={setCalendarOpen}>
+                    <PopoverTrigger asChild>
+                      <Button
+                        variant={"outline"}
+                        className={cn(
+                          "w-full justify-start text-left font-normal text-xs text-slate-600",
+                          !field.value && "text-muted-foreground"
+                        )}
+                      >
+                        <CalendarIcon />
+                        {field.value ? format(field.value as Date, "PPP", { locale: ptBR }) : <span className="text-slate-500"></span>}
+                      </Button>
+                    </PopoverTrigger>
+                    <PopoverContent className="w-auto p-0" align="start">
+                      <Calendar
+                        mode="single"
+                        className="aria-selected:text-white"
+                        locale={ptBR}
+                        selected={field.value}
+                        onSelect={(date?: Date) => {
+                          field.onChange(date);
+                          setCalendarOpen(false);
+                        }}
+                      />
+                    </PopoverContent>
+                  </Popover>
                 </FormControl>
                 <FormMessage className="text-[10px]" />
               </FormItem>
@@ -171,7 +267,10 @@ export function CreateOrderForm() {
                 >
                   Horário
                 </FormLabel>
-                <Select value={field.value} onValueChange={field.onChange}>
+                <Select
+                  onValueChange={field.onChange}
+                  defaultValue={field.value}
+                >
                   <FormControl>
                     <SelectTrigger className="text-xs w-full text-slate-600 placeholder:text-slate-500 placeholder:text-xs">
                       <SelectValue placeholder="Selecione um horário" />
@@ -202,8 +301,11 @@ export function CreateOrderForm() {
                 </FormLabel>
                 <FormControl>
                   <Input
-                    {...field}
-                    value={price}
+                    value={field.value}
+                    onChange={(e) => {
+                      const value = transformPrice(e.target.value);
+                      field.onChange(value);
+                    }}
                     style={{ fontSize: "12px" }}
                     className="text-slate-600 placeholder:text-slate-400 placeholder:text-xs"
                   />

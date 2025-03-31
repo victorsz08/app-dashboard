@@ -74,7 +74,7 @@ export function DataTableToday() {
       <CardHeader>
         <CardTitle className="text-slate-600">Pedidos Recentes</CardTitle>
         <CardDescription className="text-xs text-slate-500">
-          Contratos com agendamentos previsto para hoje, dia{" "}
+          Contratos com agendamentos previsto para hoje dia{" "}
           {format(currentDate, "dd/MMMM", { locale: ptBR })}
         </CardDescription>
       </CardHeader>
