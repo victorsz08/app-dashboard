@@ -28,6 +28,7 @@ import {
   DropdownMenuTrigger,
 } from "../ui/dropdown-menu";
 import { CreateOrderDialog } from "../dialogs/create-order-dialog";
+import { UpdateSchedulingDialog } from "../dialogs/update-scheduling-dialog";
 
 const orders = [
   {
@@ -119,8 +120,8 @@ export function DataTableToday() {
                       </Button>
                     </DropdownMenuTrigger>
                     <DropdownMenuContent align="end" className="w-48 ">
-                      <DropdownMenuItem className="cursor-pointer text-xs">
-                        Editar Agendamento
+                      <DropdownMenuItem asChild>
+                        <UpdateSchedulingDialog data={{ schedulingDate: new Date(order.scheduleDate), schedulingTime: "08h as 12h", number: order.number, local: order.local }}/>
                       </DropdownMenuItem>
                       <DropdownMenuItem className="cursor-pointer text-xs">
                         Editar status
