@@ -1,80 +1,94 @@
 "use client";
 
-import { House, ClipboardList, Notebook, UserRoundCheck, ShieldCheck, WalletMinimal, Globe } from "lucide-react";
-import { Sidebar, SidebarContent, SidebarHeader, SidebarSeparator } from "../ui/sidebar";
-import { ItemProps, NavMain } from "./nav-main";
+import React from "react";
+import { Sidebar, SidebarContent, SidebarFooter, SidebarHeader, SidebarMenuButton } from "../ui/sidebar";
 import Image from "next/image";
+import { NavMainItem, NavMainItems } from "./nav-main";
+import { 
+    Clipboard, 
+    ExternalLink, 
+    FileSearch, 
+    House, 
+    LogOut, 
+    Notebook, 
+    UserRoundSearch, 
+    Wallet 
+} from "lucide-react";
+import { NavUtilities, NavUtilitiesItem } from "./nav-utilities";
 import { Separator } from "../ui/separator";
-import { NavLink } from "./nav-link";
 
-
-const data: ItemProps = {
-    items: [
-        {
-            title: "Dashboard",
-            url: "/dashboard",
-            icon: House
-        },
-        {
-            title: "Contratos",
-            url: "/contratos",
-            icon: ClipboardList
-        },
-        {
-            title: "Notas",
-            url: "/notas",
-            icon: Notebook
-        }
-    ]
-};
-
-const dataLinks: ItemProps = {
-  items: [
+const mainItems: NavMainItem[] = [
     {
-        title: "Situação CPF",
-        url: "https://servicos.receita.fazenda.gov.br/Servicos/CPF/ConsultaSituacao/ConsultaPublica.asp",
-        icon: UserRoundCheck,
+        title: "Dashboard",
+        href: "/dashboard",
+        icon: House
+    },
+    {
+        title: "Contratos",
+        href: "/contratos",
+        icon: Clipboard
+    },
+    {
+        title: "Notas",
+        href: "/notas",
+        icon: Notebook
+    },
+];
+
+const navUtilitiesItems: NavUtilitiesItem[] = [
+    {
+        title: "Consultar CPF",
+        href: "https://servicos.receita.fazenda.gov.br/Servicos/CPF/ConsultaSituacao/ConsultaPublica.asp",
+        icon: UserRoundSearch,
         target: "_blank"
     },
     {
-        title: "Situação CNPJ",
-        url: "https://solucoes.receita.fazenda.gov.br/Servicos/cnpjreva/cnpjreva_Solicitacao.asp",
-        icon: ShieldCheck,
+        title: "Consultar CNPJ",
+        href: "https://solucoes.receita.fazenda.gov.br/Servicos/cnpjreva/cnpjreva_Solicitacao.asp",
+        icon: FileSearch,
         target: "_blank"
     },
     {
         title: "Negocia Fácil Claro",
-        url: "https://claro.negociafacil.com.br/",
-        icon: WalletMinimal,
+        href: "https://claro.negociafacil.com.br/",
+        icon: Wallet,
         target: "_blank"
     },
     {
-      title: "Site Oficial da Claro",
-      url: "https://www.claro.com.br/",
-      icon: Globe,
-      target: "_blank"
-  },
+        title: "Site Oficial da Claro",
+        href: "https://www.claro.com.br/",
+        icon: ExternalLink,
+        target: "_blank"
+    },
 ]
-}
 
-export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
+export default function AppSidebar({ ...props } : React.ComponentProps<typeof Sidebar>) {
 
     return (
-        <Sidebar collapsible="icon" {...props} className="bg-white dark:bg-slate-900">
-            <SidebarHeader className="flex items-center gap-2 py-6 flex-row">
-                <Image width={28} height={28} src="icon.svg" alt="Notetools-Logo" />
+        <Sidebar {...props} collapsible="icon">
+            <SidebarHeader className="flex flex-row items-center gap-1">
+                <Image src={"icon.svg"} width={32} height={32} alt="Logo Notetools"/>
                 <h1 
-                    className="text-slate-500 font-semibold text-xl dark:text-slate-100
-                    group-data-[collapsible=icon]:hidden">
-                    Notetools
+                    className="text-base font-medium text-slate-600 group-data-[collapsible=icon]:hidden"
+                >
+                        Notetools
                 </h1>
             </SidebarHeader>
             <Separator/>
             <SidebarContent>
-                <NavMain items={data.items}/>
+                <NavMainItems items={mainItems}/>
                 <Separator/>
-                <NavLink items={dataLinks.items}/>
+                <NavUtilities items={navUtilitiesItems}/>
             </SidebarContent>
+            <SidebarFooter>
+                <SidebarMenuButton
+                    className="text-red-700 bg-red-200 cursor-pointer hover:text-red-800 
+                    hover:bg-red-300 duration-100"
+                >
+                    <LogOut/>
+                    <span className="group-data-[collapsible=icon]:hidden">Sair</span>
+                </SidebarMenuButton>
+            </SidebarFooter>
         </Sidebar>
     )
 }

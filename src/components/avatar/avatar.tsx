@@ -1,54 +1,80 @@
 "use client";
 
-import Link from "next/link";
+import { LogOut, Settings, UserRound } from "lucide-react";
 import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuTrigger } from "../ui/dropdown-menu";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuGroup,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "../ui/dropdown-menu";
+import Link from "next/link";
 import { Separator } from "../ui/separator";
 
-export type AccountProps = {
-    username: string;
-    firstName: string;
-    lastName: string;
-    image: string;
-}
+export type AvatarAccountProps = {
+  username: string;
+  fallback: string;
+  image?: string;
+};
 
-
-export function Account({ data } : { data: AccountProps }) {
-
-    return (
-        <DropdownMenu >
-            <DropdownMenuTrigger asChild>
-                <Avatar className="cursor-pointer w-9 h-9">
-                    <AvatarImage src={data.image}/>
-                    <AvatarFallback>
-                        {data.firstName.charAt(0).toUpperCase()}{data.lastName.charAt(0).toUpperCase()}
-                    </AvatarFallback>
-                </Avatar>
-            </DropdownMenuTrigger>
-            <DropdownMenuContent align="end" className="text-xs w-[220px] text-slate-600">
-                <DropdownMenuLabel>
-                    <div className="flex flex-col gap-0">
-                        <span className="text-sm text-slate-600 font-semibold">{data.firstName} {data.lastName}</span>
-                        <span className="text-xs text-slate-500">@{data.username}</span>
-                    </div>
-                </DropdownMenuLabel>
-                <Separator/>
-                <DropdownMenuItem className="cursor-pointer mt-1">
-                    <Link href="/perfil">
-                        <span>Perfil</span>
-                    </Link>
-                </DropdownMenuItem>
-                <DropdownMenuItem className="cursor-pointer">
-                    <Link href="/perfil">
-                        <span>Configurações</span>
-                    </Link>
-                </DropdownMenuItem>
-                <Separator className="my-2"/>
-                <DropdownMenuItem 
-                    className="bg-red-300 text-red-600 cursor-pointer">
-                    Sair
-                </DropdownMenuItem>
-            </DropdownMenuContent>
-        </DropdownMenu>
-    )
+export function AvatarAccount({
+  fallback,
+  image,
+  username,
+}: AvatarAccountProps) {
+  return (
+    <DropdownMenu>
+      <DropdownMenuTrigger asChild>
+        <Avatar className="w-10 h-10 cursor-pointer">
+          <AvatarImage src={image} />
+          <AvatarFallback>
+            {fallback.split(" ").map((item) => item.charAt(0).toUpperCase())}
+          </AvatarFallback>
+        </Avatar>
+      </DropdownMenuTrigger>
+      <DropdownMenuContent align="end" className="w-[250px]">
+        <DropdownMenuGroup>
+          <DropdownMenuItem>
+            <span className="flex flex-col text-start justify-start gap-0">
+              <span className="text-slate-600 font-medium text-sm">
+                {fallback}
+              </span>
+              <span className="text-slate-400 font-light text-xs">
+                @{username}
+              </span>
+            </span>
+          </DropdownMenuItem>
+        </DropdownMenuGroup>
+        <Separator className="my-3"/>
+        <DropdownMenuGroup>
+          <DropdownMenuItem>
+            <Link
+              href="/configuracoes"
+              className="flex flex-row items-center gap-1 cursor-pointer"
+            >
+              <Settings size={12} />
+              <span className="text-xs text-slate-500">Configurações</span>
+            </Link>
+          </DropdownMenuItem>
+          <DropdownMenuItem>
+            <Link
+              href="/perfil"
+              className="flex flex-row items-center gap-1 cursor-pointer"
+            >
+              <UserRound size={12} />
+              <span className="text-xs text-slate-500">Conta</span>
+            </Link>
+          </DropdownMenuItem>
+        </DropdownMenuGroup>
+        <Separator className="my-3"/>
+        <DropdownMenuGroup>
+          <DropdownMenuItem className="flex flex-row items-center gap-1 text-red-600 hover:text-red-700 cursor-pointer">
+            <LogOut size={12} className="text-red-600 hover:text-red-700" />
+            <span className="text-xs">Sair</span>
+          </DropdownMenuItem>
+        </DropdownMenuGroup>
+      </DropdownMenuContent>
+    </DropdownMenu>
+  );
 }

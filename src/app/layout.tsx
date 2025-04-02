@@ -13,7 +13,7 @@ export default function RootLayout({
   return (
     <html lang="pt-BR">
       <body
-        className={`${poppins.className} antialiased bg-slate-100 dark:bg-slate-900 tracking-tight`}
+        className={`${poppins.className} antialiased bg-slate-200 dark:bg-slate-900`}
       >
         {children}
       </body>

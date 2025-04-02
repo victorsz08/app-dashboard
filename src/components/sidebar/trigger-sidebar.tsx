@@ -1,17 +1,20 @@
 "use client";
 
 import { Menu } from "lucide-react";
+import { Button } from "../ui/button";
 import { useSidebar } from "../ui/sidebar";
-
 
 
 export function TriggerSidebar() {
     const { toggleSidebar } = useSidebar();
 
     return (
-        <span className="hover:bg-slate-100 p-1 w-fit duration-100 
-            rounded-sm cursor-pointer dark:hover:bg-slate-700" onClick={toggleSidebar}>
-            <Menu size={24} className="text-slate-600 dark:text-slate-200"/>
-        </span>
+        <Button
+            variant="secondary"
+            className="text-slate-500 cursor-pointer"
+            onClick={toggleSidebar}
+        >
+            <Menu size={24}/>
+        </Button>
     )
 }
