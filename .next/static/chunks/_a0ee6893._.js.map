@@ -2,6 +2,6 @@
   "version": 3,
   "sources": [],
   "sections": [
-    {"offset": {"line": 7, "column": 0}, "map": {"version":3,"sources":["file:///home/vsdeveloper/%C3%81rea%20de%20trabalho/app-dashboard/src/app/page.tsx"],"sourcesContent":["\"use client\";\n\nimport { redirect } from \"next/navigation\";\n\n\nexport default function Home() {\n  return redirect(\"/dashboard\");\n};"],"names":[],"mappings":";;;AAEA;AAFA;;AAKe,SAAS;IACtB,OAAO,CAAA,GAAA,qIAAA,CAAA,WAAQ,AAAD,EAAE;AAClB;KAFwB","debugId":null}},
-    {"offset": {"line": 27, "column": 0}, "map": {"version":3,"sources":["file:///home/vsdeveloper/%C3%81rea%20de%20trabalho/app-dashboard/node_modules/next/navigation.js"],"sourcesContent":["module.exports = require('./dist/client/components/navigation')\n"],"names":[],"mappings":"AAAA,OAAO,OAAO","ignoreList":[0],"debugId":null}}]
+    {"offset": {"line": 7, "column": 0}, "map": {"version":3,"sources":["file:///workspaces/app-dashboard/src/app/page.tsx"],"sourcesContent":["\"use client\";\n\nimport { redirect } from \"next/navigation\";\n\n\nexport default function Home() {\n  return redirect(\"/dashboard\");\n};"],"names":[],"mappings":";;;AAEA;AAFA;;AAKe,SAAS;IACtB,OAAO,CAAA,GAAA,qIAAA,CAAA,WAAQ,AAAD,EAAE;AAClB;KAFwB","debugId":null}},
+    {"offset": {"line": 27, "column": 0}, "map": {"version":3,"sources":["file:///workspaces/app-dashboard/node_modules/next/navigation.js"],"sourcesContent":["module.exports = require('./dist/client/components/navigation')\n"],"names":[],"mappings":"AAAA,OAAO,OAAO","ignoreList":[0],"debugId":null}}]
 }
