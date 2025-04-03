@@ -24,11 +24,13 @@ export function NavUtilities({ items } : { items: NavUtilitiesItem[] }) {
                    <Collapsible
                         key={item.title}
                         asChild
+                        
                         className="group/collapsible"
                     >
                         <Link href={item.href}>
                             <SidebarMenuItem>
                                 <SidebarMenuButton
+                                    tooltip={item.title}
                                     className="text-slate-500 data-[active=true]:text-white 
                                     data-[active=true]:bg-purple-700 cursor-pointer"
                                 >

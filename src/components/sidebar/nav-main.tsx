@@ -31,6 +31,7 @@ export function NavMainItems({ items } : { items: NavMainItem[] }) {
                         <Link href={item.href}>
                             <SidebarMenuItem>
                                 <SidebarMenuButton
+                                    tooltip={item.title}
                                     isActive={pathname === item.href ? true : false}
                                     className="text-slate-500 data-[active=true]:text-white 
                                     data-[active=true]:bg-purple-700 cursor-pointer"

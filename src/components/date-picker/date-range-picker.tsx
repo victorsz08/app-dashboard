@@ -16,12 +16,12 @@ export type DateRangePickerProps = {
 export function DateRangePicker({ date, setDate }: DateRangePickerProps) {
   return (
     <div className="grid gap-2">
-    <Popover>
+    <Popover modal>
       <PopoverTrigger asChild>
         <Button
           id="date"
           variant="outline"
-          className="w-[250px] text-slate-600 justify-start"
+          className="w-[250px] text-slate-500 justify-start font-normal"
         >
           <CalendarIcon />
           {date?.from ? (
@@ -38,8 +38,8 @@ export function DateRangePicker({ date, setDate }: DateRangePickerProps) {
           )}
         </Button>
       </PopoverTrigger>
-      <PopoverContent align="start">
-        <Calendar
+      <PopoverContent align="end" className="w-auto p-0">
+        <Calendar 
             initialFocus
             locale={ptBR}
             mode="range"

@@ -48,7 +48,7 @@ export function AvatarAccount({
         </DropdownMenuGroup>
         <Separator className="my-3"/>
         <DropdownMenuGroup>
-          <DropdownMenuItem>
+          <DropdownMenuItem className="cursor-pointer">
             <Link
               href="/configuracoes"
               className="flex flex-row items-center gap-1 cursor-pointer"
@@ -57,7 +57,7 @@ export function AvatarAccount({
               <span className="text-xs text-slate-500">Configurações</span>
             </Link>
           </DropdownMenuItem>
-          <DropdownMenuItem>
+          <DropdownMenuItem className="cursor-pointer">
             <Link
               href="/perfil"
               className="flex flex-row items-center gap-1 cursor-pointer"
