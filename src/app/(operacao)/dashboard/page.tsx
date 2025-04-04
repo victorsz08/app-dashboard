@@ -5,7 +5,7 @@ import { DailyBarChart } from "@/components/charts/bar-chart";
 import { PieChartByDate } from "@/components/charts/pie-chart";
 import { DateRangePicker } from "@/components/date-picker/date-range-picker";
 import { subDays } from "date-fns";
-import { ChartArea, ChartBar, ChartBarIcon, ChartColumn } from "lucide-react";
+import { ChartArea,  ChartBarIcon, ChartColumn } from "lucide-react";
 import { useState } from "react";
 import { DateRange } from "react-day-picker";
 
