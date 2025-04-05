@@ -3,6 +3,7 @@
 import { CardOverview } from "@/components/card/card-overview";
 import { DailyBarChart } from "@/components/charts/bar-chart";
 import { PieChartByDate } from "@/components/charts/pie-chart";
+import { DailyOrderData } from "@/components/data-table/daily-data-today";
 import { DateRangePicker } from "@/components/date-picker/date-range-picker";
 import { subDays } from "date-fns";
 import { ChartArea,  ChartBarIcon, ChartColumn } from "lucide-react";
@@ -28,6 +29,9 @@ export default function DashboardPage() {
      <section className="flex space-x-4">
       <DailyBarChart dateRange={date}/>
       <PieChartByDate dateRange={date}/>
+     </section>
+     <section>
+      <DailyOrderData/>
      </section>
     </section>
   );
