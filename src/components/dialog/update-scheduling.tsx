@@ -18,6 +18,7 @@ import { format } from "date-fns";
 import { ptBR } from "date-fns/locale";
 import { Calendar } from "../ui/calendar";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "../ui/select";
+import { ContractDataType } from "@/types/contract.type";
 
 type UpdateSchedulingDataType = {
   id: string;
@@ -51,7 +52,7 @@ const updateSchedulingSchema = z.object({
 
 type UpdateSchedulingForm = z.infer<typeof updateSchedulingSchema>;
 
-export function UpdateScheduling({ data }: { data: UpdateSchedulingDataType }) {
+export function UpdateScheduling({ data }: { data: ContractDataType }) {
   const form = useForm<UpdateSchedulingForm>({
     resolver: zodResolver(updateSchedulingSchema),
     defaultValues: {

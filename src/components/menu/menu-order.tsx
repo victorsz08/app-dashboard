@@ -3,19 +3,12 @@
 import { EllipsisVertical } from "lucide-react";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuTrigger } from "../ui/dropdown-menu";
 import { DropdownMenuItem } from "@radix-ui/react-dropdown-menu";
+import { UpdateScheduling } from "../dialog/update-scheduling";
+import { ContractDataType } from "@/types/contract.type";
+import { UpdateStatusForm } from "../dialog/update-status";
 
-type OrderStatus = "pendente" | "cancelado" | "reagendar" | "conectado";
 
-export type OrderDataType = {
-    id: string;
-    number: string;
-    local: string;
-    schedulingDate: Date;
-    schedulingTime: string;
-    status: OrderStatus;
-}
-
-export function MenuOrder() {
+export function MenuOrder({ data } : { data: ContractDataType }) {
 
     return (
         <DropdownMenu>
@@ -23,6 +16,12 @@ export function MenuOrder() {
                 <EllipsisVertical size={14} />
             </DropdownMenuTrigger>
             <DropdownMenuContent>
+                <DropdownMenuItem asChild>
+                    <UpdateScheduling data={data} />
+                </DropdownMenuItem>
+                <DropdownMenuItem asChild>
+                    <UpdateStatusForm data={data}/>
+                </DropdownMenuItem>
                 <DropdownMenuItem asChild>
                     
                 </DropdownMenuItem>
